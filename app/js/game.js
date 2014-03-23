@@ -1,8 +1,14 @@
+var canvas = document.createElement('canvas');
+document.body.appendChild(canvas);
+
 var Game = {};
+Game.context = canvas.getContext('2d');
+Game.context.canvas.width = window.innerWidth;
+Game.context.canvas.height = window.innerHeight;
 Game.SHIP_SPEED = 15;
 
 Game.start = function () {
-  Game.ship = new Ship(240, 300);
+  Game.ship = new Ship(Game.context.canvas.width/2-50, Game.context.canvas.height - 100);
 };
 
 Game.draw = function () {
@@ -12,15 +18,6 @@ Game.draw = function () {
 Game.update = function () {
   Game.ship.update();
 };
-
-
-var canvas = document.createElement('canvas');
-document.body.appendChild(canvas);
-
-Game.context = canvas.getContext('2d');
-Game.context.canvas.width = window.innerWidth;
-Game.context.canvas.height = window.innerHeight;
-
 
 var Key = {
   pressed: {},
@@ -43,19 +40,13 @@ Key.onKeyUp = function(event) {
   delete Key.pressed[event.keyCode];
 };
 
-
-
 function Ship(x, y) {
   this.pos = {x: x, y: y};
   this.size = {w: 100, h: 100};
   this.bullets = [];
+
   var image = new Image();
   image.src = "/images/spaceship.svg";
-
-  var self = this;
-  image.onload = function() {
-    self.draw();
-  };
 
   this.draw = function () {
     Game.context.drawImage(image, this.pos.x, this.pos.y, this.size.w, this.size.h);
@@ -100,22 +91,17 @@ function Bullet(x, y) {
 
   this.pos = {x: x, y: y};
   this.size = {w: w, h: h};
+
   var image = new Image();
   image.src = "/images/bullet.png";
 
-  var self = this;
-  image.onload = function() {
-    self.draw();
-  };
-
   this.draw = function () {
-    Game.context.drawImage(image, self.pos.x, self.pos.y, self.size.w, self.size.h);
+    Game.context.drawImage(image, this.pos.x, this.pos.y, this.size.w, this.size.h);
   };
 
   this.update = function() {
-    self.pos.y -= 10;
+    this.pos.y -= 10;
   };
-
 }
 
 document.body.addEventListener('keydown', Key.onKeyDown, false);
