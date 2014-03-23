@@ -1,0 +1,21 @@
+{
+  "name": "aulas-css",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rafbgarcia/aulas-css"
+  },
+  "author": "Rafael Garcia",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "a1589baafa4a71f3522e00a0d86311dd4eb9f189",
+  "bugs": {
+    "url": "https://github.com/rafbgarcia/aulas-css/issues"
+  },
+  "devDependencies": {
+    "express": "~3.5.0"
+  }
+}
