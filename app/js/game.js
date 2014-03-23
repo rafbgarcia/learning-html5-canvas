@@ -1,8 +1,25 @@
-var canvas = document.getElementById('canvas');
-canvas.width = window.innerWidth - 100;
-canvas.height = window.innerHeight - 100;
-var ctx = canvas.getContext('2d');
-var SPEED = 15;
+var Game = {};
+Game.SHIP_SPEED = 15;
+
+Game.start = function () {
+  Game.ship = new Ship(240, 300);
+};
+
+Game.draw = function () {
+  Game.ship.draw();
+};
+
+Game.update = function () {
+  Game.ship.update();
+};
+
+
+var canvas = document.createElement('canvas');
+document.body.appendChild(canvas);
+
+Game.context = canvas.getContext('2d');
+Game.context.canvas.width = window.innerWidth;
+Game.context.canvas.height = window.innerHeight;
 
 
 var Key = {
@@ -41,23 +58,23 @@ function Ship(x, y) {
   };
 
   this.draw = function () {
-    ctx.drawImage(image, this.pos.x, this.pos.y, this.size.w, this.size.h);
+    Game.context.drawImage(image, this.pos.x, this.pos.y, this.size.w, this.size.h);
   };
 
   this.moveLeft = function() {
-    this.pos.x -= SPEED;
+    this.pos.x -= Game.SHIP_SPEED;
   };
 
   this.moveRight = function() {
-    this.pos.x += SPEED;
+    this.pos.x += Game.SHIP_SPEED;
   };
 
   this.moveUp = function() {
-    this.pos.y -= SPEED;
+    this.pos.y -= Game.SHIP_SPEED;
   };
 
   this.moveDown = function() {
-    this.pos.y += SPEED;
+    this.pos.y += Game.SHIP_SPEED;
   };
 
   this.update = function () {
@@ -92,7 +109,7 @@ function Bullet(x, y) {
   };
 
   this.draw = function () {
-    ctx.drawImage(image, self.pos.x, self.pos.y, self.size.w, self.size.h);
+    Game.context.drawImage(image, self.pos.x, self.pos.y, self.size.w, self.size.h);
   };
 
   this.update = function() {
@@ -101,28 +118,13 @@ function Bullet(x, y) {
 
 }
 
-
-Game = {};
-
-Game.start = function () {
-  Game.ship = new Ship(240, 300);
-};
-
-Game.draw = function () {
-  Game.ship.draw();
-};
-
-Game.update = function () {
-  Game.ship.update();
-};
-
 document.body.addEventListener('keydown', Key.onKeyDown, false);
 document.body.addEventListener('keyup', Key.onKeyUp, false);
 
 Game.start();
 
 setInterval(function() {
-  ctx.clearRect(0, 0, 1000, 1000);
+  Game.context.clearRect(0, 0, 1000, 1000);
 
   Game.update();
   Game.draw();
